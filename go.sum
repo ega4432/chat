@@ -1,2 +1,6 @@
 github.com/gorilla/websocket v1.4.1 h1:q7AeDBpnBk8AogcD4DSag/Ukw/KV+YhzLj2bP5HvKCM=
 github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/yoshimitsuEgashira/trace v0.0.0-20191116143013-857e01ac0d93 h1:jcVG5/7wsMXdkPVxSj8kkMQuX4RhCcosveFyQL9XFGg=
+github.com/yoshimitsuEgashira/trace v0.0.0-20191116143013-857e01ac0d93/go.mod h1:AHQ/VDhkocekz2V86Igb/GETpd2sxXL70XY04MaLGZU=
+github.com/yoshimitsuEgashira/trace v0.0.0-20191118141805-da1d7cd140c9 h1:/NDdSB0wODfqWhjGVvoYOq9a8aLj+RVCY9HRlc9/+Lg=
+github.com/yoshimitsuEgashira/trace v0.0.0-20191118141805-da1d7cd140c9/go.mod h1:IQLAhYhCurocKC3zgjc3h1f9V7nPyJ1LuSgUKDKjGbw=
