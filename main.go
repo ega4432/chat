@@ -5,8 +5,13 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
+
+	"github.com/stretchr/gomniauth/providers/google"
+
+	"github.com/stretchr/gomniauth"
 )
 
 type templateHandler struct {
@@ -25,6 +30,13 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	var addr = flag.String("host", ":8080", "アプリケーションのアドレス")
 	flag.Parse()
+	// setup Gomniauth
+	gomniauth.SetSecurityKey(os.Getenv("SECURITY_KEY"))
+	gomniauth.WithProviders(
+		google.New(os.Getenv("GOOGLE_CLIENT"), os.Getenv("GOOGLE_SECRET"), os.Getenv("GOOGLE_CALL_BACK_URL")),
+		// todo: facebook.New(),
+		// todo: github.New(),
+	)
 	r := newRoom()
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
