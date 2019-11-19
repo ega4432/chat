@@ -2,7 +2,7 @@
 go build -o chat
 if [ -e chat ]
 then
-./chat
+./chat -host=":8080"
 else
 echo "build failed."
 fi
