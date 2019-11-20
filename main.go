@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"sync"
 
+	"github.com/stretchr/objx"
+
 	"github.com/stretchr/gomniauth/providers/google"
 
 	"github.com/stretchr/gomniauth"
@@ -24,11 +26,18 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
 		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
 	})
-	_ = t.templ.Execute(w, r)
+	data := map[string]interface{}{
+		"Host": r.Host,
+	}
+	authCookie, err := r.Cookie("auth")
+	if err == nil {
+		data["UserData"] = objx.MustFromBase64(authCookie.Value)
+	}
+	_ = t.templ.Execute(w, data)
 }
 
 func main() {
-	var addr = flag.String("host", ":8080", "アプリケーションのアドレス")
+	var addr = flag.String("host", ":8080", "Application address")
 	flag.Parse()
 	// setup Gomniauth
 	gomniauth.SetSecurityKey(os.Getenv("SECURITY_KEY"))
