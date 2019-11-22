@@ -20,6 +20,7 @@ func (c *client) read() {
 		if err == nil {
 			msg.When = time.Now()
 			msg.Name = c.userData["name"].(string)
+			msg.AvatarURL, _ = c.room.avatar.GetAvatarURL(c)
 			avatarURL, ok := c.userData["avatar_url"]
 			if ok {
 				msg.AvatarURL = avatarURL.(string)

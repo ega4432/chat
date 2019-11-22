@@ -46,7 +46,7 @@ func main() {
 		// todo: facebook.New(),
 		// todo: github.New(),
 	)
-	r := newRoom()
+	r := newRoom(UseGravatar)
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
