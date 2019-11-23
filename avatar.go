@@ -36,7 +36,7 @@ func (_ GravatarAvatar) GetAvatarURL(c *client) (string, error) {
 		if emailStr, ok := email.(string); ok {
 			m := md5.New()
 			_, _ = io.WriteString(m, strings.ToLower(emailStr))
-			return fmt.Sprintf("//wwww.gravatar.com/avatar/%x", m.Sum(nil)), nil
+			return fmt.Sprintf("//www.gravatar.com/avatar/%x", m.Sum(nil)), nil
 		}
 	}
 	return "", ErrNoAvatarURL

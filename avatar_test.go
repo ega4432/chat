@@ -7,18 +7,16 @@ func TestAuthAvatar(t *testing.T) {
 	client := new(client)
 	url, err := authAvatar.GetAvatarURL(client)
 	if err != ErrNoAvatarURL {
-		t.Error("If no values exists, the avatar URL has to return 'ErrNoAvatarURL'")
+		t.Error("AuthAvatar.GetAvatarURL should return ErrNoAvatarURL when no value present")
 	}
-	testUrl := "http://url-no-avatar/"
-	client.userData = map[string]interface{}{
-		"avatar_url": testUrl,
-	}
+	testUrl := "http://url-to-avatar/"
+	client.userData = map[string]interface{}{"avatar_url": testUrl}
 	url, err = authAvatar.GetAvatarURL(client)
 	if err != nil {
-		t.Error("If values exists, the avatar URL has to return no error")
+		t.Error("AuthAvatar.GetAvatarURL should return no error when value present")
 	} else {
 		if url != testUrl {
-			t.Error("AuthAvatar.GetAvatarURL has to correct URL")
+			t.Error("AuthAvatar.GetAvatarURL should return correct URL")
 		}
 	}
 }
@@ -31,7 +29,7 @@ func TestGravatarAvatar(t *testing.T) {
 	if err != nil {
 		t.Error("GravatarAvatar has to return no error")
 	}
-	if url != "//wwww.gravatar.com/avatar/0bc83cb571cd1c50ba6f3e8a78ef1346" {
+	if url != "//www.gravatar.com/avatar/0bc83cb571cd1c50ba6f3e8a78ef1346" {
 		t.Errorf("GravatarAvatar.GetAvatarURL returns %s", url)
 	}
 }
