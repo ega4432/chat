@@ -61,8 +61,11 @@ func main() {
 	})
 	http.HandleFunc("/auth/", loginHandler)
 	http.Handle("/room", r)
+	http.Handle("/upload", &templateHandler{filename: "upload.html"})
+	http.HandleFunc("/uploader", uploadHandler)
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars"))))
 	go r.run()
-	log.Println("Webサーバを開始します。ポート：", *addr)
+	log.Println("Starting web server on: ", *addr)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("listenAndServe:", err)
 	}
