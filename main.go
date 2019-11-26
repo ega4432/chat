@@ -16,6 +16,8 @@ import (
 	"github.com/stretchr/gomniauth"
 )
 
+var avatars Avatar = UseFileSystemAvatar
+
 type templateHandler struct {
 	once     sync.Once
 	filename string
