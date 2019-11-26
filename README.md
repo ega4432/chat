@@ -4,7 +4,7 @@
 
 This is a Chat application using WebSocket. ( WebSocket is a communication standard for computer networks. It is a technical standard for realizing bidirectional communication in Web applications. )
 
-![chat_demo](https://user-images.githubusercontent.com/38056766/69636388-d2bf1400-1099-11ea-8045-1d8a69df38a0.gif)
+![chat_demo](https://user-images.githubusercontent.com/38056766/69639993-f3d73300-10a0-11ea-963d-d9981249fe35.gif)
 
 ## Installation
 
