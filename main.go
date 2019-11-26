@@ -16,6 +16,12 @@ import (
 	"github.com/stretchr/gomniauth"
 )
 
+var avatars Avatar = TryAvatars{
+	UseFileSystemAvatar,
+	UseAuthAvatar,
+	UseGravatar,
+}
+
 type templateHandler struct {
 	once     sync.Once
 	filename string
@@ -46,7 +52,7 @@ func main() {
 		// todo: facebook.New(),
 		// todo: github.New(),
 	)
-	r := newRoom(UseGravatar)
+	r := newRoom()
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
@@ -61,8 +67,11 @@ func main() {
 	})
 	http.HandleFunc("/auth/", loginHandler)
 	http.Handle("/room", r)
+	http.Handle("/upload", &templateHandler{filename: "upload.html"})
+	http.HandleFunc("/uploader", uploadHandler)
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars"))))
 	go r.run()
-	log.Println("Webサーバを開始します。ポート：", *addr)
+	log.Println("Starting web server on: ", *addr)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("listenAndServe:", err)
 	}
