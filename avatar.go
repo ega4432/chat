@@ -4,12 +4,24 @@ import (
 	"errors"
 	"io/ioutil"
 	"path/filepath"
+	"strings"
 )
 
 var ErrNoAvatarURL = errors.New("chat: failed to get the avatar URL")
 
 type Avatar interface {
 	GetAvatarURL(ChatUser) (string, error)
+}
+
+type TryAvatars []Avatar
+
+func (a TryAvatars) GetAvatarURL(u ChatUser) (string, error) {
+	for _, avatar := range a {
+		if url, err := avatar.GetAvatarURL(u); err == nil {
+			return url, nil
+		}
+	}
+	return "", ErrNoAvatarURL
 }
 
 type AuthAvatar struct{}
@@ -37,14 +49,17 @@ type FileSystemAvatar struct{}
 var UseFileSystemAvatar FileSystemAvatar
 
 func (_ FileSystemAvatar) GetAvatarURL(u ChatUser) (string, error) {
-	if files, err := ioutil.ReadDir("avatars"); err == nil {
-		for _, file := range files {
-			if file.IsDir() {
-				continue
-			}
-			if match, _ := filepath.Match(u.UniqueID()+"", file.Name()); match {
-				return "/avatars/" + file.Name(), nil
-			}
+	files, err := ioutil.ReadDir("avatars")
+	if err != nil {
+		return "", ErrNoAvatarURL
+	}
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+		filename := file.Name()
+		if u.UniqueID() == strings.TrimSuffix(filename, filepath.Ext(filename)) {
+			return "/avatars/" + filename, nil
 		}
 	}
 	return "", ErrNoAvatarURL

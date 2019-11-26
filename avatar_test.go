@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	gomniauthtest "github.com/stretchr/gomniauth/test"
 )
 
 func TestAuthAvatar(t *testing.T) {
@@ -44,8 +46,13 @@ func TestGravatarAvatar(t *testing.T) {
 
 func TestFileSystemAvatar(t *testing.T) {
 	filename := filepath.Join("avatars", "abc.jpg")
-	_ = ioutil.WriteFile(filename, []byte{}, 0777)
-	defer func() { _ = os.Remove(filename) }()
+	if err := os.MkdirAll("avatars", 0777); err != nil {
+		t.Errorf("couldn't make avatar dir: %s", err)
+	}
+	if err := ioutil.WriteFile(filename, []byte{}, 0777); err != nil {
+		t.Errorf("couldn't make avatar: %s", err)
+	}
+	defer os.Remove(filename)
 
 	var fileSystemAvatar FileSystemAvatar
 	user := &chatUser{uniqueID: "abc"}
