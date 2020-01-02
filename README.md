@@ -15,20 +15,20 @@ This is a Chat application using WebSocket. ( WebSocket is a communication stand
 ### Setting
 
 First of all, clone this repository.
-Then excute `go get` the packages you need. Also create a file to write environment variables with the name `.envrc` and describe the following.
+Then excute `go get` the packages you need. Also create a file to write environment variables with the name `.env` and describe the following.
 
 ```
-export GO111MODULE=on
-export SECURITY_KEY=
-export FACEBOOK_CLIENT=
-export FACEBOOK_SECRET=
-export FACEBOOK_CALL_BACK_URL=
-export GITHUB_CLIENT=
-export GITHUB_SECRET=
-export GITHUB_CALL_BACK_URL=
-export GOOGLE_CLIENT=
-export GOOGLE_SECRET=
-export GOOGLE_CALL_BACK_URL=
+GO111MODULE=on
+SECURITY_KEY=
+FACEBOOK_CLIENT=
+FACEBOOK_SECRET=
+FACEBOOK_CALL_BACK_URL=
+GITHUB_CLIENT=
+GITHUB_SECRET=
+GITHUB_CALL_BACK_URL=
+GOOGLE_CLIENT=
+GOOGLE_SECRET=
+GOOGLE_CALL_BACK_URL=
 ``` 
 
 ## Usage
